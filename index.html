@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>To 樾樾: My Exclusive Planet</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Noto+Serif+SC:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- 全局高级感配色 --- */
+        :root {
+            --primary-pink: #eec1cd;
+            --deep-pink: #d4a5b0;
+            --accent-red: #cc7a8b;
+            --cream-bg: #fffbf0;
+            --text-main: #5d4e52;
+            --text-light: #9c8e92;
+            --glass-bg: rgba(255, 255, 255, 0.5);
+            --glass-border: 1px solid rgba(255, 255, 255, 0.6);
+            --shadow-float: 0 15px 35px rgba(212, 165, 176, 0.15);
+        }
+
+        body {
+            font-family: 'Nunito', 'Noto Serif SC', serif;
+            background-color: var(--cream-bg);
+            color: var(--text-main);
+            margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth;
+            -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
+        }
+
+        h1, h2, h3 { font-family: 'Noto Serif SC', serif; font-weight: 700; color: var(--text-main); letter-spacing: 1.5px; }
+
+        /* 柔光滤镜遮罩 */
+        .section-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(255,251,240,0.95) 0%, rgba(255,240,245,0.8) 100%);
+            z-index: 1; pointer-events: none;
+        }
+
+        section {
+            min-height: 100vh; padding: 60px 20px; box-sizing: border-box;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            position: relative; overflow: hidden;
+            background-size: cover; background-position: center;
+        }
+
+        .container { max-width: 900px; width: 100%; margin: 0 auto; position: relative; z-index: 5; text-align: center; }
+
+        .circle-img {
+            border-radius: 50%; border: 4px solid rgba(255,255,255,0.9);
+            box-shadow: var(--shadow-float); object-fit: cover; background: white;
+        }
+
+        .float { animation: floatAnim 4s ease-in-out infinite; }
+        @keyframes floatAnim { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+
+        /* --- 第1屏 --- */
+        #hero { background: radial-gradient(circle at top right, #fff0f5, #fffbf0); }
+        .hero-title { font-size: 2.5rem; margin-bottom: 10px; color: var(--accent-red); line-height: 1.2; }
+        .hero-img { width: 240px; height: 240px; margin: 0 auto 30px auto; display: block; }
+        .timer-badge { 
+            background: white; padding: 15px 30px; border-radius: 50px; 
+            border: 1px solid #ffeef0; box-shadow: var(--shadow-float); 
+            margin-top: 30px; display: inline-block; width: fit-content;
+        }
+
+
+        /* --- 第2屏：糯米团子号专列 --- */
+        #yue-express {
+            background: linear-gradient(to bottom, #fff9fa 0%, #fff0f5 100%);
+            overflow: hidden;
+        }
+        .cloud-track {
+            position: absolute; bottom: 10%; left: -50%; width: 200%; height: 150px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0.6; filter: blur(20px);
+            animation: moveClouds 20s linear infinite;
+        }
+        @keyframes moveClouds { 100% { transform: translateX(50%); } }
+        .express-container {
+            position: relative; width: 100%; height: 400px; /* 移动端高度调整 */
+            display: flex; justify-content: center; align-items: center;
+            perspective: 1000px;
+            margin-bottom: 20px;
+        }
+        .train-wrapper {
+            position: relative; width: 800px; max-width: 95%; height: auto;
+            transform: translateX(-120%);
+            animation: trainArrive 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            animation-delay: 0.5s;
+        }
+        @keyframes trainArrive { 
+            0% { transform: translateX(-120%) skewX(-5deg); opacity: 0.5; } 
+            80% { transform: translateX(5%) skewX(2deg); opacity: 1; }
+            100% { transform: translateX(0) skewX(0); opacity: 1; }
+        }
+        .train-img { width: 100%; height: auto; display: block; filter: drop-shadow(0 20px 30px rgba(204, 122, 139, 0.2)); }
+        
+        .carriage-trigger { position: absolute; top: 20%; height: 60%; cursor: pointer; z-index: 10; -webkit-tap-highlight-color: rgba(0,0,0,0); }
+        .carriage-trigger::after {
+            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0; transition: opacity 0.3s; border-radius: 20px;
+        }
+        .carriage-trigger:active::after, .carriage-trigger:hover::after { opacity: 1; }
+        #c1 { left: 5%; width: 38%; }
+        #c2 { left: 42%; width: 35%; }
+        #c3 { left: 72%; width: 35%; }
+        
+        .cargo-modal {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
+            width: 80%; max-width: 300px; background: rgba(255,255,255,0.95);
+            border-radius: 30px; padding: 30px 20px; text-align: center;
+            box-shadow: 0 25px 50px rgba(204, 122, 139, 0.3);
+            border: 3px solid #fff; z-index: 20;
+            opacity: 0; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            pointer-events: none;
+        }
+        .cargo-modal.show { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto;}
+        .cargo-icon { font-size: 3.5rem; margin-bottom: 15px; display: block; animation: floatAnim 3s infinite; }
+        .cargo-title { color: var(--accent-red); font-weight: bold; margin-bottom: 10px; font-size: 1.2rem; }
+        .cargo-desc { font-size: 0.95rem; color: #666; line-height: 1.5; }
+        .modal-close { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: #ccc; cursor: pointer; padding: 5px; }
+        
+        #final-gift-btn {
+            margin-top: 20px; padding: 15px 35px; 
+            background: var(--accent-red); color: white; border: none; 
+            border-radius: 30px; font-weight: bold; font-size: 1rem;
+            box-shadow: 0 10px 20px rgba(204, 122, 139, 0.4);
+            cursor: pointer; opacity: 0; transform: translateY(20px); transition: all 0.5s;
+            pointer-events: none; display: inline-block;
+        }
+        #final-gift-btn.show { opacity: 1; transform: translateY(0); pointer-events: auto;}
+
+
+        /* --- 第3屏：星系引力场 (食物) --- */
+        #taste-galaxy {
+            background: radial-gradient(circle at center, #fff5f7 0%, #fffbf0 70%);
+            overflow: hidden;
+        }
+        .galaxy-container {
+            position: relative; width: 100%; height: 500px; /* 移动端高度优化 */
+            display: flex; justify-content: center; align-items: center;
+        }
+        .orbit-ring {
+            position: absolute; width: 340px; height: 340px; 
+            border: 1px dashed rgba(204, 122, 139, 0.15); border-radius: 50%;
+            animation: spin 60s linear infinite; z-index: 1; pointer-events: none;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        
+        .core-planet { position: relative; width: 180px; height: 180px; z-index: 10; }
+        .center-img { 
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
+            border: 6px solid white; box-shadow: 0 0 50px rgba(255, 194, 209, 0.5);
+            position: relative; z-index: 2; transition: all 0.5s;
+        }
+        .core-flash {
+            position: absolute; top:0; left:0; width:100%; height:100%; border-radius:50%;
+            background: white; opacity: 0; z-index: 3; pointer-events: none;
+        }
+        .crystal {
+            position: absolute; width: 60px; height: 60px;
+            background: rgba(255,255,255,0.9); border: 1px solid white; border-radius: 50%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08); cursor: pointer; z-index: 5; transition: transform 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .crystal span { font-size: 1.5rem; pointer-events: none; }
+        .crystal p { font-size: 0.6rem; color: #aaa; margin:0; pointer-events: none; transform: scale(0.9); }
+        .crystal:active { transform: scale(0.9); background: #fff0f5; }
+        
+        .particle {
+            position: fixed; width: 12px; height: 12px; border-radius: 50%;
+            background: var(--accent-red); box-shadow: 0 0 10px var(--accent-red);
+            z-index: 999; pointer-events: none;
+        }
+        .emotion-feedback { position: absolute; top: 0; left: 0; width: 100%; text-align: center; z-index: 20; }
+        .emotion-title { font-size: 1.3rem; color: var(--text-main); margin-bottom: 5px; font-weight: bold;}
+        .emotion-sub { font-size: 0.9rem; color: var(--accent-red); opacity: 0; transition: opacity 0.5s; }
+
+
+        /* --- 第4屏 (原第5屏)：未来 --- */
+        #passion { background-image: url('bg_passion.jpg'); }
+        #passion .section-overlay { background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(227, 242, 253, 0.8) 100%); }
+        .run-img { width: 100px; height: 130px; border-radius: 10px; border: 3px solid white; transform: rotate(-3deg); box-shadow: var(--shadow-float); }
+
+
+        /* --- 第5屏 (纯背景铺垫) --- */
+        #confession-intro { 
+            background-image: url('bg_confession.jpg'); 
+        }
+        #confession-intro .section-overlay { 
+            background: linear-gradient(to bottom, rgba(255,251,240,0.5) 0%, rgba(0,0,0,0.2) 100%); 
+        }
+
+        /* --- 第6屏 (背景重复，文字浮现) --- */
+        #confession-main { 
+            background-image: url('bg_final.jpg'); 
+        }
+        #confession-main .section-overlay {
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(255,251,240,0.2) 100%); 
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border: var(--glass-border); border-radius: 30px; padding: 30px;
+            box-shadow: var(--shadow-float); position: relative; display: inline-block; text-align: left;
+            max-width: 90%;
+        }
+        .letter-content { font-size: 1rem; line-height: 1.8; text-align: justify; color: #555; }
+        .cat-img { width: 80px; height: 80px; position: absolute; bottom: -25px; right: -15px; }
+
+        #fireworks-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
+        .confetti { position: absolute; width: 8px; height: 8px; opacity: 0; }
+
+        /* --- 移动端响应式适配 (Media Queries) --- */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 1.8rem; }
+            .hero-img { width: 180px; height: 180px; }
+            
+            .express-container { height: 300px; }
+            .train-wrapper { width: 100%; } /* 火车宽度占满屏幕 */
+            
+            /* 星系部分：根据屏幕缩小星球和轨道 */
+            .orbit-ring { width: 85vw; height: 85vw; max-width: 320px; max-height: 320px; }
+            .core-planet { width: 45vw; height: 45vw; max-width: 160px; max-height: 160px; }
+            
+            /* 未来部分：图片缩小 */
+            .run-img { width: 80px; height: 110px; }
+            
+            /* 信件部分 */
+            .glass-card { padding: 25px 20px; }
+            .cat-img { width: 70px; height: 70px; }
+        }
+    </style>
+</head>
+<body>
+
+    <section id="hero">
+        <div class="container">
+            <img src="img_bear.png" class="circle-img hero-img" alt="小熊二">
+            <h1 class="hero-title">祝我最可爱的樾樾<br>情人节快乐！</h1>
+            <p style="letter-spacing: 2px; color: var(--text-light); font-size: 0.9rem;">糯米包汤圆和我的第一个情人节</p>
+            <div class="timer-badge">
+                <div style="font-size: 0.8rem; color: #999;">我们已经甜蜜在线</div>
+                <div id="love-timer" style="font-size: 1.2rem; font-weight: 800; color: var(--accent-red); margin-top: 5px;">...</div>
+                <div style="font-size: 0.8rem; color: #aaa; margin-top: 5px;">始于 2026.01.31</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="yue-express">
+        <div class="cloud-track"></div>
+        <div class="container">
+            <h2 style="color: var(--accent-red); margin-bottom: 10px; font-size: 1.5rem;">🚂 小熊二号·专列抵达</h2>
+            <p style="color: var(--text-light); margin-bottom: 20px; font-size: 0.9rem;" id="train-tips">点击车厢，查收为你准备的专属货物 (0/3)</p>
+
+            <div class="express-container">
+                <div class="train-wrapper">
+                    <img src="img_train.png" class="train-img" alt="可爱专列">
+                    <div class="carriage-trigger" id="c1" onclick="openCarriage(1)"></div>
+                    <div class="carriage-trigger" id="c2" onclick="openCarriage(2)"></div>
+                    <div class="carriage-trigger" id="c3" onclick="openCarriage(3)"></div>
+                </div>
+                <div class="cargo-modal" id="cargo-modal">
+                    <span class="modal-close" onclick="closeModal()">×</span>
+                    <span class="cargo-icon" id="modal-icon">🎁</span>
+                    <div class="cargo-title" id="modal-title">货物标题</div>
+                    <div class="cargo-desc" id="modal-desc">货物描述内容</div>
+                </div>
+            </div>
+            <button id="final-gift-btn" onclick="startFireworks()">🥤 收下全糖的抹茶奶茶</button>
+        </div>
+    </section>
+
+    <section id="taste-galaxy">
+        <div class="container">
+            <div class="galaxy-container" id="galaxy-area">
+                <div class="emotion-feedback">
+                    <div class="emotion-title" id="emo-main">点亮属于你的星系</div>
+                    <div class="emotion-sub" id="emo-sub" style="opacity: 1;">点击水晶，收集爱的碎片 (0/3)</div>
+                </div>
+                <div class="orbit-ring"></div>
+                <div class="core-planet float">
+                    <div class="core-flash" id="core-flash"></div>
+                    <img src="img_center.png" class="center-img" id="center-target" alt="核心星球">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="passion">
+        <div class="section-overlay"></div>
+        <div class="container">
+            <div class="glass-card" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; text-align: left;">
+                <div style="display: flex; gap: 10px; justify-content: center; width: 100%;">
+                    <img src="img_run1.jpg" class="run-img" alt="跑">
+                    <img src="img_run2.jpg" class="run-img" style="transform: rotate(3deg);" alt="跑">
+                </div>
+                <div style="text-align: left; max-width: 100%;">
+                    <h2 style="color: #6a8caf; font-size: 1.4rem; margin-top: 10px;">未来，一起奔跑</h2>
+                    <p style="line-height: 1.6; color: #666; font-size: 0.9rem;">
+                        像黑田朝日一样冲刺，像太田苍生一样热血。<br>
+                        我知道我的樾樾内心藏着巨大的<strong style="color: var(--accent-red);">上进心</strong>。
+                    </p>
+                    <p style="font-weight: bold; color: var(--text-main); margin-top: 10px; font-size: 0.9rem;">
+                        不管前路多远，我都做你最坚实的后盾。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="confession-intro">
+        <div class="section-overlay"></div>
+        </section>
+
+    <section id="confession-main">
+        <div class="section-overlay"></div>
+        <div class="container">
+            <h2 style="font-size: 1.5rem;">♓ 给双鱼座的宝藏女孩樾樾</h2>
+            <div class="glass-card float">
+                <div class="letter-content">
+                    <p>亲爱的樾樾：</p>
+                    <p>见字如面。虽然我们才刚刚开始在一起不到半个月，但我对你的喜欢是真真切切的。你活泼可爱，有上进心，待人友善，三观正，内心是个非常善良的小女孩！</p>
+                    <p>遇见你真好。希望你每天都被爱、美好和快乐包围，做一个积极向上的小公主。</p>
+                    <p>我会一直守护你、爱你的！</p>
+                    <p style="text-align: right; margin-top: 20px; color: var(--accent-red);">—— 爱你的男朋友 陈志瀚___</p>
+                </div>
+                <img src="img_cat.png" class="circle-img cat-img" alt="小猫">
+            </div>
+        </div>
+    </section>
+
+    <div id="fireworks-container"></div>
+
+    <script>
+        // 1. 计时器
+        const startDate = new Date('2026-01-31T00:00:00');
+        function updateTimer() {
+            const now = new Date(); const diff = now - startDate;
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+            document.getElementById('love-timer').innerText = `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
+        }
+        setInterval(updateTimer, 1000); updateTimer();
+
+        // 2. 列车逻辑
+        const cargoData = {
+            1: { icon: '🧸', title: '可爱能量补给', desc: '想要给樾樾织我亲手做的玩偶，守护你那永远的少女心！' },
+            2: { icon: '🍔', title: '满足感特快', desc: '塔斯汀、炸杏鲍菇和藕粉和辣条，我想包养你的胃！' },
+            3: { icon: '💄', title: '美丽补给站', desc: '口红，香水，护发素...想要守护最精致、害怕长痘的樾樾！' }
+        };
+        let openedCount = 0; const openedCarriages = new Set();
+        const modal = document.getElementById('cargo-modal');
+        const mIcon = document.getElementById('modal-icon');
+        const mTitle = document.getElementById('modal-title');
+        const mDesc = document.getElementById('modal-desc');
+        const finalBtn = document.getElementById('final-gift-btn');
+        const trainTips = document.getElementById('train-tips');
+
+        function openCarriage(id) {
+            const data = cargoData[id];
+            mIcon.innerText = data.icon; mTitle.innerText = data.title; mDesc.innerText = data.desc;
+            modal.classList.add('show');
+            if (!openedCarriages.has(id)) {
+                openedCarriages.add(id); openedCount++;
+                trainTips.innerText = `点击车厢，查收为你准备的专属货物 (${openedCount}/3)`;
+                if (openedCount === 3) setTimeout(() => finalBtn.classList.add('show'), 1000);
+            }
+        }
+        function closeModal() { modal.classList.remove('show'); }
+
+        // 3. 星系逻辑 (移动端动态半径调整)
+        const galaxyArea = document.getElementById('galaxy-area');
+        const centerTarget = document.getElementById('center-target');
+        const coreFlash = document.getElementById('core-flash');
+        const emoSub = document.getElementById('emo-sub');
+        const foods = [
+            { icon: '🍰', name: '小蛋糕', type: 'good', msg: '甜甜的你' }, { icon: '🍮', name: '嫩蛋糕', type: 'good', msg: '软糯如你' },
+            { icon: '🫐', name: '蓝莓', type: 'good', msg: '清新的爱' }, { icon: '🍔', name: '塔斯汀', type: 'good', msg: '能量满满' },
+            { icon: '🍄', name: '炸杏鲍菇', type: 'good', msg: '独特口味' }, { icon: '🍙', name: '肉松海苔', type: 'good', msg: '简单幸福' },
+            { icon: '🥩', name: '福鼎肉片', type: 'good', msg: '家乡的味道' }, { icon: '🥣', name: '藕粉', type: 'good', msg: '暖暖的' },
+            { icon: '🥛', name: '牛奶', type: 'bad', msg: '我帮你挡掉' }, { icon: '🌿', name: '香菜', type: 'bad', msg: '苦味走开' }
+        ];
+        
+        // 核心修改：动态计算半径，防止手机端溢出
+        const isMobile = window.innerWidth < 768;
+        // 如果是手机，半径设为屏幕宽度的一半减去一些边距(35%)，否则用固定170px
+        const baseRadius = isMobile ? Math.min(window.innerWidth, 360) * 0.4 : 170;
+        let collectedCount = 0; 
+
+        foods.forEach((item, index) => {
+            const el = document.createElement('div'); el.className = 'crystal';
+            el.innerHTML = `<span>${item.icon}</span><p>${item.name}</p>`;
+            const angle = (index / foods.length) * 2 * Math.PI;
+            // 减去30px是为了让元素中心对齐
+            el.style.left = `calc(50% + ${Math.cos(angle) * baseRadius}px - 30px)`;
+            el.style.top = `calc(50% + ${Math.sin(angle) * baseRadius}px - 30px)`;
+            el.style.animation = `float ${3 + Math.random()}s ease-in-out infinite`;
+            el.style.animationDelay = `${Math.random()}s`;
+            el.onclick = (e) => handleCrystalClick(e, el, item);
+            galaxyArea.appendChild(el);
+        });
+
+        function handleCrystalClick(e, el, item) {
+            if (el.classList.contains('clicked')) return;
+            el.classList.add('clicked');
+            const rectStart = el.getBoundingClientRect(); const rectEnd = centerTarget.getBoundingClientRect();
+            emoSub.innerText = item.msg; emoSub.style.opacity = 1;
+            if (item.type === 'good') {
+                el.style.opacity = 0; 
+                const p = document.createElement('div'); p.className = 'particle';
+                p.style.left = rectStart.left + 30 + 'px'; p.style.top = rectStart.top + 30 + 'px';
+                document.body.appendChild(p);
+                p.animate([
+                    { left: (rectStart.left + 30) + 'px', top: (rectStart.top + 30) + 'px', transform: 'scale(1)' },
+                    { left: (rectEnd.left + rectEnd.width / 2) + 'px', top: (rectEnd.top + rectEnd.height / 2) + 'px', transform: 'scale(0.5)' }
+                ], { duration: 600, easing: 'cubic-bezier(0.6, -0.28, 0.735, 0.045)' }).onfinish = () => {
+                    p.remove(); coreFlash.style.opacity = 0.8; setTimeout(() => coreFlash.style.opacity = 0, 300);
+                    centerTarget.style.transform = 'scale(1.1)'; setTimeout(() => centerTarget.style.transform = 'scale(1)', 300);
+                    collectedCount++; emoSub.innerText = `收集爱的碎片 (${collectedCount}/3)`;
+                };
+            } else {
+                el.style.transition = 'all 0.5s'; el.style.transform = 'scale(1.2)'; el.style.opacity = 0; emoSub.innerText = "🛡️ " + item.msg;
+            }
+        }
+
+        // 烟花逻辑
+        function startFireworks() {
+            finalBtn.innerHTML = "🎉 情人节快乐！"; finalBtn.style.background = "#ffd700";
+            const container = document.getElementById('fireworks-container');
+            const colors = ['#eec1cd', '#d4a5b0', '#fff'];
+            for(let i=0; i<80; i++) {
+                const p = document.createElement('div'); p.className = 'confetti';
+                p.style.background = colors[Math.floor(Math.random()*colors.length)];
+                p.style.left = '50%'; p.style.top = '50%';
+                const angle = Math.random() * Math.PI * 2; const dist = 100 + Math.random() * 300;
+                p.animate([
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) scale(0)`, opacity: 0 }
+                ], { duration: 1500 + Math.random()*1000, fill: 'forwards' });
+                container.appendChild(p);
+            }
+        }
+    </script>
+</body>
+</html>
