@@ -2,449 +2,430 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>To 樾樾: My Exclusive Planet</title>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800&family=Noto+Serif+SC:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
     <style>
-        /* --- 全局高级感配色 --- */
+        /* --- 1. 全局定义 --- */
         :root {
-            --primary-pink: #eec1cd;
-            --deep-pink: #d4a5b0;
-            --accent-red: #cc7a8b;
-            --cream-bg: #fffbf0;
-            --text-main: #5d4e52;
-            --text-light: #9c8e92;
-            --glass-bg: rgba(255, 255, 255, 0.5);
-            --glass-border: 1px solid rgba(255, 255, 255, 0.6);
-            --shadow-float: 0 15px 35px rgba(212, 165, 176, 0.15);
+            --primary-pink: #eec1cd; --deep-pink: #d4a5b0; --accent-red: #cc7a8b;
+            --cream-bg: #fffbf0; --text-main: #5d4e52; --text-light: #9c8e92;
+            --shadow-float: 0 10px 30px rgba(212, 165, 176, 0.2);
         }
-
-        body {
-            font-family: 'Nunito', 'Noto Serif SC', serif;
-            background-color: var(--cream-bg);
-            color: var(--text-main);
-            margin: 0; padding: 0; overflow-x: hidden; scroll-behavior: smooth;
-            -webkit-tap-highlight-color: transparent; /* 移除移动端点击高亮 */
-        }
-
-        h1, h2, h3 { font-family: 'Noto Serif SC', serif; font-weight: 700; color: var(--text-main); letter-spacing: 1.5px; }
-
-        /* 柔光滤镜遮罩 */
-        .section-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to bottom, rgba(255,251,240,0.95) 0%, rgba(255,240,245,0.8) 100%);
-            z-index: 1; pointer-events: none;
-        }
-
-        section {
-            min-height: 100vh; padding: 60px 20px; box-sizing: border-box;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            position: relative; overflow: hidden;
-            background-size: cover; background-position: center;
-        }
-
-        .container { max-width: 900px; width: 100%; margin: 0 auto; position: relative; z-index: 5; text-align: center; }
-
-        .circle-img {
-            border-radius: 50%; border: 4px solid rgba(255,255,255,0.9);
-            box-shadow: var(--shadow-float); object-fit: cover; background: white;
-        }
-
-        .float { animation: floatAnim 4s ease-in-out infinite; }
-        @keyframes floatAnim { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
-
-        /* --- 第1屏 --- */
-        #hero { background: radial-gradient(circle at top right, #fff0f5, #fffbf0); }
-        .hero-title { font-size: 2.5rem; margin-bottom: 10px; color: var(--accent-red); line-height: 1.2; }
-        .hero-img { width: 240px; height: 240px; margin: 0 auto 30px auto; display: block; }
-        .timer-badge { 
-            background: white; padding: 15px 30px; border-radius: 50px; 
-            border: 1px solid #ffeef0; box-shadow: var(--shadow-float); 
-            margin-top: 30px; display: inline-block; width: fit-content;
-        }
-
-
-        /* --- 第2屏：糯米团子号专列 --- */
-        #yue-express {
-            background: linear-gradient(to bottom, #fff9fa 0%, #fff0f5 100%);
-            overflow: hidden;
-        }
-        .cloud-track {
-            position: absolute; bottom: 10%; left: -50%; width: 200%; height: 150px;
-            background: radial-gradient(ellipse at center, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
-            opacity: 0.6; filter: blur(20px);
-            animation: moveClouds 20s linear infinite;
-        }
-        @keyframes moveClouds { 100% { transform: translateX(50%); } }
-        .express-container {
-            position: relative; width: 100%; height: 400px; /* 移动端高度调整 */
-            display: flex; justify-content: center; align-items: center;
-            perspective: 1000px;
-            margin-bottom: 20px;
-        }
-        .train-wrapper {
-            position: relative; width: 800px; max-width: 95%; height: auto;
-            transform: translateX(-120%);
-            animation: trainArrive 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
-            animation-delay: 0.5s;
-        }
-        @keyframes trainArrive { 
-            0% { transform: translateX(-120%) skewX(-5deg); opacity: 0.5; } 
-            80% { transform: translateX(5%) skewX(2deg); opacity: 1; }
-            100% { transform: translateX(0) skewX(0); opacity: 1; }
-        }
-        .train-img { width: 100%; height: auto; display: block; filter: drop-shadow(0 20px 30px rgba(204, 122, 139, 0.2)); }
+        * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; outline: none; }
         
-        .carriage-trigger { position: absolute; top: 20%; height: 60%; cursor: pointer; z-index: 10; -webkit-tap-highlight-color: rgba(0,0,0,0); }
-        .carriage-trigger::after {
-            content: ''; position: absolute; top:0; left:0; width:100%; height:100%;
-            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%);
-            opacity: 0; transition: opacity 0.3s; border-radius: 20px;
+        html, body {
+            position: relative; height: 100%; width: 100%;
+            background-color: var(--cream-bg); font-family: 'Nunito', 'Noto Serif SC', serif;
+            overflow: hidden; 
         }
-        .carriage-trigger:active::after, .carriage-trigger:hover::after { opacity: 1; }
+
+        /* --- 2. 布局核心 (手机适配关键) --- */
+        .swiper-container { width: 100%; height: 100%; }
+        .swiper-slide {
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            overflow: hidden; position: relative; width: 100%;
+        }
+
+        .safe-container {
+            width: 88vw; 
+            max-width: 420px;
+            margin: 0 auto;
+            display: flex; flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* --- 3. 第一屏 (首页) --- */
+        #slide1 { background: radial-gradient(circle at top right, #fff0f5, #fffbf0); }
+        .hero-img { width: 130px; height: 130px; margin-bottom: 20px; border-radius: 50%; box-shadow: var(--shadow-float); }
+        .hero-title { 
+            font-size: clamp(1.6rem, 7vw, 2.2rem); 
+            color: var(--accent-red); line-height: 1.4; margin-bottom: 15px; 
+            text-align: center; width: 100%; word-break: break-all;
+        }
+        .timer-badge { 
+            background: white; padding: 10px 20px; border-radius: 50px; 
+            border: 1px solid #ffeef0; box-shadow: var(--shadow-float); 
+            text-align: center; margin-top: 10px;
+        }
+
+        /* --- 4. 第二屏 (列车) --- */
+        #slide2 { background: linear-gradient(to bottom, #fff9fa 0%, #fff0f5 100%); }
+        .express-container { width: 100%; height: 200px; margin: 20px 0; display: flex; align-items: center; justify-content: center; position: relative;}
+        .train-wrapper { width: 100%; opacity: 0; transform: translateX(-100%); position: relative; }
+        .train-img { width: 100%; display: block; filter: drop-shadow(0 10px 15px rgba(204, 122, 139, 0.2)); }
+        
+        .carriage-trigger { position: absolute; top: 20%; height: 60%; z-index: 10; cursor: pointer; }
         #c1 { left: 5%; width: 38%; }
         #c2 { left: 42%; width: 35%; }
         #c3 { left: 72%; width: 35%; }
-        
-        .cargo-modal {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0);
-            width: 80%; max-width: 300px; background: rgba(255,255,255,0.95);
-            border-radius: 30px; padding: 30px 20px; text-align: center;
-            box-shadow: 0 25px 50px rgba(204, 122, 139, 0.3);
-            border: 3px solid #fff; z-index: 20;
-            opacity: 0; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: none;
-        }
-        .cargo-modal.show { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto;}
-        .cargo-icon { font-size: 3.5rem; margin-bottom: 15px; display: block; animation: floatAnim 3s infinite; }
-        .cargo-title { color: var(--accent-red); font-weight: bold; margin-bottom: 10px; font-size: 1.2rem; }
-        .cargo-desc { font-size: 0.95rem; color: #666; line-height: 1.5; }
-        .modal-close { position: absolute; top: 10px; right: 15px; font-size: 2rem; color: #ccc; cursor: pointer; padding: 5px; }
-        
-        #final-gift-btn {
-            margin-top: 20px; padding: 15px 35px; 
-            background: var(--accent-red); color: white; border: none; 
-            border-radius: 30px; font-weight: bold; font-size: 1rem;
-            box-shadow: 0 10px 20px rgba(204, 122, 139, 0.4);
-            cursor: pointer; opacity: 0; transform: translateY(20px); transition: all 0.5s;
-            pointer-events: none; display: inline-block;
-        }
-        #final-gift-btn.show { opacity: 1; transform: translateY(0); pointer-events: auto;}
 
+        .cargo-modal { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); 
+            width: 90%; background: rgba(255,255,255,0.98); border-radius: 20px; padding: 20px; 
+            box-shadow: 0 25px 50px rgba(204, 122, 139, 0.3); border: 2px solid #fff; 
+            z-index: 50; opacity: 0; transition: all 0.4s; pointer-events: none; text-align: center; 
+        }
+        .cargo-modal.show { transform: translate(-50%, -50%) scale(1); opacity: 1; pointer-events: auto; }
+        
+        #final-gift-btn { 
+            padding: 12px 30px; background: var(--accent-red); color: white; border: none; 
+            border-radius: 30px; font-weight: bold; box-shadow: 0 10px 20px rgba(204, 122, 139, 0.4); 
+            opacity: 0; transform: translateY(20px); transition: all 0.5s; margin-top: 20px; pointer-events: none;
+        }
+        #final-gift-btn.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
 
-        /* --- 第3屏：星系引力场 (食物) --- */
-        #taste-galaxy {
-            background: radial-gradient(circle at center, #fff5f7 0%, #fffbf0 70%);
-            overflow: hidden;
+        /* --- [关键修改] 5. 第三屏 (星系 + 美食回忆背景) --- */
+        #slide3 { position: relative; }
+        /* 使用伪元素添加背景图，并叠加一层半透明蒙版，防止图片太花影响游戏 */
+        #slide3::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('bg_final.jpg') center/cover no-repeat;
+            opacity: 1; z-index: -2;
         }
-        .galaxy-container {
-            position: relative; width: 100%; height: 500px; /* 移动端高度优化 */
-            display: flex; justify-content: center; align-items: center;
+        /* 叠加层：柔和的遮罩，让背景隐约可见但不过分抢眼 */
+        #slide3::after {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 251, 240, 0.85); /* 85% 不透明度的奶油色 */
+            z-index: -1;
         }
-        .orbit-ring {
-            position: absolute; width: 340px; height: 340px; 
-            border: 1px dashed rgba(204, 122, 139, 0.15); border-radius: 50%;
-            animation: spin 60s linear infinite; z-index: 1; pointer-events: none;
+
+        .galaxy-header { margin-bottom: 50px; text-align: center; width: 100%; }
+        .galaxy-wrap {
+            position: relative; width: 280px; height: 280px; 
+            display: flex; align-items: center; justify-content: center;
         }
+        .orbit-ring { 
+            position: absolute; width: 230px; height: 230px; 
+            border: 1px dashed rgba(204, 122, 139, 0.3); border-radius: 50%; animation: spin 60s linear infinite; 
+        }
+        .core-planet img { width: 100px; height: 100px; border-radius: 50%; border: 4px solid white; box-shadow: 0 0 20px rgba(238,193,205,0.5); }
+        .crystal { 
+            position: absolute; width: 44px; height: 44px; background: rgba(255,255,255,0.95); 
+            border-radius: 50%; display: flex; flex-direction: column; justify-content: center; align-items: center; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); z-index: 20; 
+        }
+        .crystal span { font-size: 1.2rem; }
+        .crystal p { font-size: 10px; color: #999; margin: -2px 0 0 0; transform: scale(0.85); }
+
+        /* --- 6. 第四屏 (跑步) --- */
+        #slide4 { position: relative; } 
+        #slide4::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: url('bg_passion.jpg') center/cover; opacity: 0.1; z-index: -1; }
+        
+        .glass-card { 
+            width: 100%; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); 
+            border-radius: 20px; padding: 25px 20px; box-shadow: var(--shadow-float); text-align: left; 
+        }
+        .img-group { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
+        .run-img { width: 40vw; max-width: 150px; height: auto; border-radius: 10px; border: 3px solid white; box-shadow: var(--shadow-float); }
+
+        /* --- 7. 第五屏 (甜蜜合影) --- */
+        #slide-confession { background: radial-gradient(circle at center, #ffe6ea 0%, #fff0f5 100%); }
+        .photo-card-wrap {
+            background: white; padding: 10px 10px 30px 10px; border-radius: 4px;
+            box-shadow: 0 15px 35px rgba(204, 122, 139, 0.25);
+            transform: rotate(-3deg); margin-bottom: 20px; width: 100%;
+        }
+        .confession-img { width: 100%; height: auto; display: block; border-radius: 2px; }
+
+        /* --- 8. 最后一屏 (信件) --- */
+        #slide5 { background: linear-gradient(180deg, #fffbf0 0%, #fff0f5 100%); }
+        .letter-content p { margin: 10px 0; line-height: 1.6; font-size: 0.95rem; color: #555; text-align: justify; }
+        .cat-img { width: 60px; height: 60px; position: absolute; bottom: -25px; right: -10px; border-radius: 50%; border: 3px solid white; box-shadow: var(--shadow-float); }
+
+        /* --- 动画与控件 --- */
+        .arrow-up { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); width: 24px; animation: bounce 2s infinite; opacity: 0.6; z-index: 20; }
+        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translate(-50%, 0);} 40% {transform: translate(-50%, -10px);} 60% {transform: translate(-50%, -5px);} }
         @keyframes spin { 100% { transform: rotate(360deg); } }
         
-        .core-planet { position: relative; width: 180px; height: 180px; z-index: 10; }
-        .center-img { 
-            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
-            border: 6px solid white; box-shadow: 0 0 50px rgba(255, 194, 209, 0.5);
-            position: relative; z-index: 2; transition: all 0.5s;
-        }
-        .core-flash {
-            position: absolute; top:0; left:0; width:100%; height:100%; border-radius:50%;
-            background: white; opacity: 0; z-index: 3; pointer-events: none;
-        }
-        .crystal {
-            position: absolute; width: 60px; height: 60px;
-            background: rgba(255,255,255,0.9); border: 1px solid white; border-radius: 50%;
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08); cursor: pointer; z-index: 5; transition: transform 0.3s;
-            -webkit-tap-highlight-color: transparent;
-        }
-        .crystal span { font-size: 1.5rem; pointer-events: none; }
-        .crystal p { font-size: 0.6rem; color: #aaa; margin:0; pointer-events: none; transform: scale(0.9); }
-        .crystal:active { transform: scale(0.9); background: #fff0f5; }
+        [data-ani] { opacity: 0; }
+        .animate__animated { opacity: 1 !important; }
+
+        #loading-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fffbf0; z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; transition: opacity 0.5s; }
+        .spinner { width: 40px; height: 40px; border: 4px solid #f3f3f3; border-top: 4px solid var(--accent-red); border-radius: 50%; animation: spin 1s linear infinite; }
         
-        .particle {
-            position: fixed; width: 12px; height: 12px; border-radius: 50%;
-            background: var(--accent-red); box-shadow: 0 0 10px var(--accent-red);
-            z-index: 999; pointer-events: none;
-        }
-        .emotion-feedback { position: absolute; top: 0; left: 0; width: 100%; text-align: center; z-index: 20; }
-        .emotion-title { font-size: 1.3rem; color: var(--text-main); margin-bottom: 5px; font-weight: bold;}
-        .emotion-sub { font-size: 0.9rem; color: var(--accent-red); opacity: 0; transition: opacity 0.5s; }
-
-
-        /* --- 第4屏 (原第5屏)：未来 --- */
-        #passion { background-image: url('bg_passion.jpg'); }
-        #passion .section-overlay { background: linear-gradient(to bottom, rgba(255,255,255,1) 0%, rgba(227, 242, 253, 0.8) 100%); }
-        .run-img { width: 100px; height: 130px; border-radius: 10px; border: 3px solid white; transform: rotate(-3deg); box-shadow: var(--shadow-float); }
-
-
-        /* --- 第5屏 (纯背景铺垫) --- */
-        #confession-intro { 
-            background-image: url('bg_confession.jpg'); 
-        }
-        #confession-intro .section-overlay { 
-            background: linear-gradient(to bottom, rgba(255,251,240,0.5) 0%, rgba(0,0,0,0.2) 100%); 
-        }
-
-        /* --- 第6屏 (背景重复，文字浮现) --- */
-        #confession-main { 
-            background-image: url('bg_final.jpg'); 
-        }
-        #confession-main .section-overlay {
-            background: linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(255,251,240,0.2) 100%); 
-        }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(20px);
-            border: var(--glass-border); border-radius: 30px; padding: 30px;
-            box-shadow: var(--shadow-float); position: relative; display: inline-block; text-align: left;
-            max-width: 90%;
-        }
-        .letter-content { font-size: 1rem; line-height: 1.8; text-align: justify; color: #555; }
-        .cat-img { width: 80px; height: 80px; position: absolute; bottom: -25px; right: -15px; }
-
+        #music-control { position: fixed; top: 20px; right: 20px; width: 36px; height: 36px; z-index: 1000; border-radius: 50%; background: rgba(255,255,255,0.8); border: 1px solid var(--deep-pink); display: flex; justify-content: center; align-items: center; animation: spin 4s linear infinite; animation-play-state: paused; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        #music-control.playing { animation-play-state: running; }
+        
         #fireworks-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999; }
-        .confetti { position: absolute; width: 8px; height: 8px; opacity: 0; }
-
-        /* --- 移动端响应式适配 (Media Queries) --- */
-        @media (max-width: 768px) {
-            .hero-title { font-size: 1.8rem; }
-            .hero-img { width: 180px; height: 180px; }
-            
-            .express-container { height: 300px; }
-            .train-wrapper { width: 100%; } /* 火车宽度占满屏幕 */
-            
-            /* 星系部分：根据屏幕缩小星球和轨道 */
-            .orbit-ring { width: 85vw; height: 85vw; max-width: 320px; max-height: 320px; }
-            .core-planet { width: 45vw; height: 45vw; max-width: 160px; max-height: 160px; }
-            
-            /* 未来部分：图片缩小 */
-            .run-img { width: 80px; height: 110px; }
-            
-            /* 信件部分 */
-            .glass-card { padding: 25px 20px; }
-            .cat-img { width: 70px; height: 70px; }
-        }
+        .confetti { position: absolute; width: 6px; height: 6px; border-radius: 50%; opacity: 0; }
     </style>
 </head>
 <body>
 
-    <section id="hero">
-        <div class="container">
-            <img src="img_bear.png" class="circle-img hero-img" alt="小熊二">
-            <h1 class="hero-title">祝我最可爱的樾樾<br>情人节快乐！</h1>
-            <p style="letter-spacing: 2px; color: var(--text-light); font-size: 0.9rem;">糯米包汤圆和我的第一个情人节</p>
-            <div class="timer-badge">
-                <div style="font-size: 0.8rem; color: #999;">我们已经甜蜜在线</div>
-                <div id="love-timer" style="font-size: 1.2rem; font-weight: 800; color: var(--accent-red); margin-top: 5px;">...</div>
-                <div style="font-size: 0.8rem; color: #aaa; margin-top: 5px;">始于 2026.01.31</div>
+    <div id="loading-screen">
+        <div class="spinner"></div>
+        <p style="margin-top: 15px; color: #999; font-size: 0.8rem;">正在准备惊喜...</p>
+    </div>
+
+    <div id="music-control">
+        <svg viewBox="0 0 24 24" width="20" height="20" stroke="var(--accent-red)" stroke-width="2" fill="none">
+            <path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle>
+        </svg>
+    </div>
+    <audio id="bgm" loop preload="auto"><source src="https://music.163.com/song/media/outer/url?id=1459950258.mp3" type="audio/mpeg"></audio>
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            
+            <div class="swiper-slide" id="slide1">
+                <div class="safe-container">
+                    <img src="img_bear.png" class="hero-img" data-ani="animate__zoomIn" alt="小熊">
+                    <h1 class="hero-title" data-ani="animate__fadeInUp">祝我最可爱的樾樾<br>情人节快乐！</h1>
+                    <p style="color: var(--text-light); font-size: 0.9rem;" data-ani="animate__fadeInUp">糯米包汤圆和我的第一个情人节</p>
+                    <div class="timer-badge" data-ani="animate__fadeInUp">
+                        <div style="font-size: 0.7rem; color: #999;">我们已经甜蜜在线</div>
+                        <div id="love-timer" style="font-size: 1.1rem; font-weight: 800; color: var(--accent-red); margin: 5px 0;">...</div>
+                        <div style="font-size: 0.7rem; color: #aaa;">Since 2026.01.31</div>
+                    </div>
+                </div>
+                <div class="arrow-up"><svg viewBox="0 0 24 24" fill="#cc7a8b"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>
             </div>
-        </div>
-    </section>
 
-    <section id="yue-express">
-        <div class="cloud-track"></div>
-        <div class="container">
-            <h2 style="color: var(--accent-red); margin-bottom: 10px; font-size: 1.5rem;">🚂 小熊二号·专列抵达</h2>
-            <p style="color: var(--text-light); margin-bottom: 20px; font-size: 0.9rem;" id="train-tips">点击车厢，查收为你准备的专属货物 (0/3)</p>
-
-            <div class="express-container">
-                <div class="train-wrapper">
-                    <img src="img_train.png" class="train-img" alt="可爱专列">
-                    <div class="carriage-trigger" id="c1" onclick="openCarriage(1)"></div>
-                    <div class="carriage-trigger" id="c2" onclick="openCarriage(2)"></div>
-                    <div class="carriage-trigger" id="c3" onclick="openCarriage(3)"></div>
+            <div class="swiper-slide" id="slide2">
+                <div class="safe-container">
+                    <h2 data-ani="animate__fadeInDown" style="color: var(--accent-red); margin-bottom: 5px; font-size: 1.2rem;">🚂 小熊二号·专列</h2>
+                    <p id="train-tips" data-ani="animate__fadeIn" style="color: var(--text-light); font-size: 0.8rem;">点击车厢，查收专属货物 (0/3)</p>
+                    
+                    <div class="express-container">
+                        <div class="train-wrapper" id="train-wrapper">
+                            <img src="img_train.png" class="train-img" alt="Train">
+                            <div class="carriage-trigger" id="c1" onclick="openCarriage(1)"></div>
+                            <div class="carriage-trigger" id="c2" onclick="openCarriage(2)"></div>
+                            <div class="carriage-trigger" id="c3" onclick="openCarriage(3)"></div>
+                        </div>
+                        <div class="cargo-modal" id="cargo-modal">
+                            <div style="position:absolute; top:5px; right:15px; font-size:1.5rem; color:#ccc;" onclick="closeModal()">×</div>
+                            <span id="modal-icon" style="font-size: 3rem; display:block; margin-bottom:10px;">🎁</span>
+                            <div id="modal-title" style="color:var(--accent-red); font-weight:bold; margin-bottom:5px;"></div>
+                            <div id="modal-desc" style="font-size:0.9rem; color:#666; line-height:1.4;"></div>
+                        </div>
+                    </div>
+                    <button id="final-gift-btn" onclick="startFireworks()">🥤 收下全糖的抹茶奶茶</button>
                 </div>
-                <div class="cargo-modal" id="cargo-modal">
-                    <span class="modal-close" onclick="closeModal()">×</span>
-                    <span class="cargo-icon" id="modal-icon">🎁</span>
-                    <div class="cargo-title" id="modal-title">货物标题</div>
-                    <div class="cargo-desc" id="modal-desc">货物描述内容</div>
+                <div class="arrow-up"><svg viewBox="0 0 24 24" fill="#cc7a8b"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>
+            </div>
+
+            <div class="swiper-slide" id="slide3">
+                <div class="safe-container">
+                    <div class="galaxy-header">
+                        <h2 data-ani="animate__fadeInDown" style="color: var(--text-main); font-size: 1.2rem; font-weight:bold;">点亮属于你的星系</h2>
+                        <p id="emo-sub" data-ani="animate__fadeIn" style="font-size: 0.8rem; color: var(--accent-red); margin-top:5px;">点击水晶，收集爱的碎片</p>
+                    </div>
+                    <div class="galaxy-wrap" id="galaxy-area">
+                        <div class="orbit-ring"></div>
+                        <div class="core-planet" data-ani="animate__zoomIn">
+                            <img src="img_center.png" id="center-target" alt="Core">
+                        </div>
+                    </div>
+                </div>
+                <div class="arrow-up"><svg viewBox="0 0 24 24" fill="#cc7a8b"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>
+            </div>
+
+            <div class="swiper-slide" id="slide4">
+                <div class="safe-container">
+                    <div class="glass-card" data-ani="animate__fadeInUp">
+                        <div class="img-group">
+                            <img src="img_run1.jpg" class="run-img">
+                            <img src="img_run2.jpg" class="run-img" style="transform: rotate(4deg);">
+                        </div>
+                        <h2 style="color: #6a8caf; font-size: 1.1rem; margin-bottom: 10px;">未来，一起奔跑</h2>
+                        <p style="font-size: 0.9rem; color: #666; line-height: 1.6;">
+                            像黑田朝日一样冲刺，像太田苍生一样热血。<br>
+                            我知道我的樾樾内心藏着巨大的<strong style="color: var(--accent-red);">上进心</strong>。
+                        </p>
+                        <p style="font-size: 0.9rem; font-weight: bold; color: var(--text-main); margin-top: 10px;">
+                            不管前路多远，我都做你最坚实的后盾。
+                        </p>
+                    </div>
+                </div>
+                <div class="arrow-up"><svg viewBox="0 0 24 24" fill="#cc7a8b"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>
+            </div>
+
+            <div class="swiper-slide" id="slide-confession">
+                <div class="safe-container">
+                    <div class="photo-card-wrap" data-ani="animate__zoomIn">
+                        <img src="bg_confession.jpg" class="confession-img" alt="Confession">
+                        <div style="text-align: center; margin-top: 15px; font-family: 'Noto Serif SC', serif;">
+                            <p style="color: var(--accent-red); font-size: 1rem; font-weight: bold;">To 志瀚 / 樾樾</p>
+                            <p style="color: #999; font-size: 0.8rem; margin-top: 5px;">“如果阴雨绵绵，那我做你的晴天”</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="arrow-up"><svg viewBox="0 0 24 24" fill="#cc7a8b"><path d="M7.41 15.41L12 10.83l4.59 4.58L18 14l-6-6-6 6z"/></svg></div>
+            </div>
+
+            <div class="swiper-slide" id="slide5">
+                <div class="safe-container">
+                    <h2 data-ani="animate__fadeInDown" style="font-size: 1.3rem; margin-bottom: 20px; color: var(--text-main);">♓ 给双鱼座的女孩</h2>
+                    <div class="glass-card" data-ani="animate__zoomInUp" style="padding-bottom: 30px;">
+                        <div class="letter-content">
+                            <p>亲爱的樾樾：</p>
+                            <p>见字如面。虽然我们才刚刚开始在一起不到半个月，但我对你的喜欢是真真切切的。你活泼可爱，有上进心，待人友善，三观正，内心是个非常善良的小女孩！</p>
+                            <p>遇见你真好。希望你每天都被爱、美好和快乐包围，做一个积极向上的小公主。</p>
+                            <p>我会一直守护你、爱你的！</p>
+                            <p style="text-align: right; margin-top: 20px; color: var(--accent-red); font-weight: bold;">—— 爱你的男朋友 陈志瀚</p>
+                        </div>
+                        <img src="img_cat.png" class="cat-img" data-ani="animate__bounceIn" alt="Cat">
+                    </div>
                 </div>
             </div>
-            <button id="final-gift-btn" onclick="startFireworks()">🥤 收下全糖的抹茶奶茶</button>
+
         </div>
-    </section>
-
-    <section id="taste-galaxy">
-        <div class="container">
-            <div class="galaxy-container" id="galaxy-area">
-                <div class="emotion-feedback">
-                    <div class="emotion-title" id="emo-main">点亮属于你的星系</div>
-                    <div class="emotion-sub" id="emo-sub" style="opacity: 1;">点击水晶，收集爱的碎片 (0/3)</div>
-                </div>
-                <div class="orbit-ring"></div>
-                <div class="core-planet float">
-                    <div class="core-flash" id="core-flash"></div>
-                    <img src="img_center.png" class="center-img" id="center-target" alt="核心星球">
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="passion">
-        <div class="section-overlay"></div>
-        <div class="container">
-            <div class="glass-card" style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap; justify-content: center; text-align: left;">
-                <div style="display: flex; gap: 10px; justify-content: center; width: 100%;">
-                    <img src="img_run1.jpg" class="run-img" alt="跑">
-                    <img src="img_run2.jpg" class="run-img" style="transform: rotate(3deg);" alt="跑">
-                </div>
-                <div style="text-align: left; max-width: 100%;">
-                    <h2 style="color: #6a8caf; font-size: 1.4rem; margin-top: 10px;">未来，一起奔跑</h2>
-                    <p style="line-height: 1.6; color: #666; font-size: 0.9rem;">
-                        像黑田朝日一样冲刺，像太田苍生一样热血。<br>
-                        我知道我的樾樾内心藏着巨大的<strong style="color: var(--accent-red);">上进心</strong>。
-                    </p>
-                    <p style="font-weight: bold; color: var(--text-main); margin-top: 10px; font-size: 0.9rem;">
-                        不管前路多远，我都做你最坚实的后盾。
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="confession-intro">
-        <div class="section-overlay"></div>
-        </section>
-
-    <section id="confession-main">
-        <div class="section-overlay"></div>
-        <div class="container">
-            <h2 style="font-size: 1.5rem;">♓ 给双鱼座的宝藏女孩樾樾</h2>
-            <div class="glass-card float">
-                <div class="letter-content">
-                    <p>亲爱的樾樾：</p>
-                    <p>见字如面。虽然我们才刚刚开始在一起不到半个月，但我对你的喜欢是真真切切的。你活泼可爱，有上进心，待人友善，三观正，内心是个非常善良的小女孩！</p>
-                    <p>遇见你真好。希望你每天都被爱、美好和快乐包围，做一个积极向上的小公主。</p>
-                    <p>我会一直守护你、爱你的！</p>
-                    <p style="text-align: right; margin-top: 20px; color: var(--accent-red);">—— 爱你的男朋友 陈志瀚___</p>
-                </div>
-                <img src="img_cat.png" class="circle-img cat-img" alt="小猫">
-            </div>
-        </div>
-    </section>
-
+    </div>
     <div id="fireworks-container"></div>
 
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
-        // 1. 计时器
-        const startDate = new Date('2026-01-31T00:00:00');
-        function updateTimer() {
-            const now = new Date(); const diff = now - startDate;
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-            document.getElementById('love-timer').innerText = `${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
-        }
-        setInterval(updateTimer, 1000); updateTimer();
+        // --- Init ---
+        window.onload = function() {
+            setTimeout(() => {
+                const loading = document.getElementById('loading-screen');
+                loading.style.opacity = '0';
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                    initSwiper(); 
+                }, 500);
+            }, 800);
+        };
 
-        // 2. 列车逻辑
+        // --- Swiper Logic ---
+        function initSwiper() {
+            new Swiper('.swiper-container', {
+                direction: 'vertical',
+                speed: 600,
+                on: {
+                    init: function () { playAnimation(this.slides[this.activeIndex]); },
+                    slideChangeTransitionEnd: function () { 
+                        const current = this.slides[this.activeIndex];
+                        playAnimation(current);
+                        if(current.id === 'slide2') {
+                             const train = document.getElementById('train-wrapper');
+                             if(train) {
+                                 train.style.transition = 'transform 1.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 1s';
+                                 train.style.opacity = '1';
+                                 train.style.transform = 'translateX(0)';
+                             }
+                        }
+                    }
+                }
+            });
+        }
+
+        function playAnimation(slide) {
+            slide.querySelectorAll('[data-ani]').forEach(el => {
+                el.classList.add('animate__animated', el.getAttribute('data-ani'));
+            });
+        }
+
+        // --- Interactive (Train) ---
         const cargoData = {
-            1: { icon: '🧸', title: '可爱能量补给', desc: '想要给樾樾织我亲手做的玩偶，守护你那永远的少女心！' },
-            2: { icon: '🍔', title: '满足感特快', desc: '塔斯汀、炸杏鲍菇和藕粉和辣条，我想包养你的胃！' },
-            3: { icon: '💄', title: '美丽补给站', desc: '口红，香水，护发素...想要守护最精致、害怕长痘的樾樾！' }
+            1: { icon: '🧸', title: '可爱能量', desc: '想要给樾樾织我亲手做的玩偶，守护你的少女心！' },
+            2: { icon: '🍔', title: '满足感特快', desc: '塔斯汀、炸杏鲍菇和藕粉，我想包养你的胃！' },
+            3: { icon: '💄', title: '美丽补给', desc: '口红，香水...守护最精致、害怕长痘的樾樾！' }
         };
         let openedCount = 0; const openedCarriages = new Set();
         const modal = document.getElementById('cargo-modal');
-        const mIcon = document.getElementById('modal-icon');
-        const mTitle = document.getElementById('modal-title');
-        const mDesc = document.getElementById('modal-desc');
         const finalBtn = document.getElementById('final-gift-btn');
-        const trainTips = document.getElementById('train-tips');
+        const tips = document.getElementById('train-tips');
 
-        function openCarriage(id) {
+        window.openCarriage = (id) => {
             const data = cargoData[id];
-            mIcon.innerText = data.icon; mTitle.innerText = data.title; mDesc.innerText = data.desc;
+            document.getElementById('modal-icon').innerText = data.icon;
+            document.getElementById('modal-title').innerText = data.title;
+            document.getElementById('modal-desc').innerText = data.desc;
             modal.classList.add('show');
             if (!openedCarriages.has(id)) {
                 openedCarriages.add(id); openedCount++;
-                trainTips.innerText = `点击车厢，查收为你准备的专属货物 (${openedCount}/3)`;
-                if (openedCount === 3) setTimeout(() => finalBtn.classList.add('show'), 1000);
+                if(tips) tips.innerText = `已查收 (${openedCount}/3)`;
+                if (openedCount === 3) setTimeout(() => finalBtn.classList.add('show'), 500);
             }
-        }
-        function closeModal() { modal.classList.remove('show'); }
+        };
+        window.closeModal = () => modal.classList.remove('show');
 
-        // 3. 星系逻辑 (移动端动态半径调整)
-        const galaxyArea = document.getElementById('galaxy-area');
-        const centerTarget = document.getElementById('center-target');
-        const coreFlash = document.getElementById('core-flash');
-        const emoSub = document.getElementById('emo-sub');
+        // --- Interactive (Galaxy) ---
         const foods = [
-            { icon: '🍰', name: '小蛋糕', type: 'good', msg: '甜甜的你' }, { icon: '🍮', name: '嫩蛋糕', type: 'good', msg: '软糯如你' },
-            { icon: '🫐', name: '蓝莓', type: 'good', msg: '清新的爱' }, { icon: '🍔', name: '塔斯汀', type: 'good', msg: '能量满满' },
-            { icon: '🍄', name: '炸杏鲍菇', type: 'good', msg: '独特口味' }, { icon: '🍙', name: '肉松海苔', type: 'good', msg: '简单幸福' },
-            { icon: '🥩', name: '福鼎肉片', type: 'good', msg: '家乡的味道' }, { icon: '🥣', name: '藕粉', type: 'good', msg: '暖暖的' },
-            { icon: '🥛', name: '牛奶', type: 'bad', msg: '我帮你挡掉' }, { icon: '🌿', name: '香菜', type: 'bad', msg: '苦味走开' }
+            {i:'🍰', n:'蛋糕', t:'good'}, {i:'🫐', n:'蓝莓', t:'good'}, {i:'🍔', n:'汉堡', t:'good'}, 
+            {i:'🍄', n:'杏鲍菇', t:'good'}, {i:'🥣', n:'藕粉', t:'good'}, {i:'🥛', n:'牛奶', t:'bad'}, {i:'🌿', n:'香菜', t:'bad'}
         ];
-        
-        // 核心修改：动态计算半径，防止手机端溢出
-        const isMobile = window.innerWidth < 768;
-        // 如果是手机，半径设为屏幕宽度的一半减去一些边距(35%)，否则用固定170px
-        const baseRadius = isMobile ? Math.min(window.innerWidth, 360) * 0.4 : 170;
-        let collectedCount = 0; 
+        const area = document.getElementById('galaxy-area');
+        const centerTarget = document.getElementById('center-target');
+        const emoSub = document.getElementById('emo-sub');
+        const r = 110; 
 
-        foods.forEach((item, index) => {
-            const el = document.createElement('div'); el.className = 'crystal';
-            el.innerHTML = `<span>${item.icon}</span><p>${item.name}</p>`;
-            const angle = (index / foods.length) * 2 * Math.PI;
-            // 减去30px是为了让元素中心对齐
-            el.style.left = `calc(50% + ${Math.cos(angle) * baseRadius}px - 30px)`;
-            el.style.top = `calc(50% + ${Math.sin(angle) * baseRadius}px - 30px)`;
-            el.style.animation = `float ${3 + Math.random()}s ease-in-out infinite`;
-            el.style.animationDelay = `${Math.random()}s`;
-            el.onclick = (e) => handleCrystalClick(e, el, item);
-            galaxyArea.appendChild(el);
-        });
-
-        function handleCrystalClick(e, el, item) {
-            if (el.classList.contains('clicked')) return;
-            el.classList.add('clicked');
-            const rectStart = el.getBoundingClientRect(); const rectEnd = centerTarget.getBoundingClientRect();
-            emoSub.innerText = item.msg; emoSub.style.opacity = 1;
-            if (item.type === 'good') {
-                el.style.opacity = 0; 
-                const p = document.createElement('div'); p.className = 'particle';
-                p.style.left = rectStart.left + 30 + 'px'; p.style.top = rectStart.top + 30 + 'px';
-                document.body.appendChild(p);
-                p.animate([
-                    { left: (rectStart.left + 30) + 'px', top: (rectStart.top + 30) + 'px', transform: 'scale(1)' },
-                    { left: (rectEnd.left + rectEnd.width / 2) + 'px', top: (rectEnd.top + rectEnd.height / 2) + 'px', transform: 'scale(0.5)' }
-                ], { duration: 600, easing: 'cubic-bezier(0.6, -0.28, 0.735, 0.045)' }).onfinish = () => {
-                    p.remove(); coreFlash.style.opacity = 0.8; setTimeout(() => coreFlash.style.opacity = 0, 300);
-                    centerTarget.style.transform = 'scale(1.1)'; setTimeout(() => centerTarget.style.transform = 'scale(1)', 300);
-                    collectedCount++; emoSub.innerText = `收集爱的碎片 (${collectedCount}/3)`;
+        if(area) {
+            foods.forEach((item, index) => {
+                const el = document.createElement('div'); el.className = 'crystal';
+                const angle = (index / foods.length) * 2 * Math.PI;
+                el.style.left = `calc(50% + ${Math.cos(angle) * r}px - 22px)`;
+                el.style.top = `calc(50% + ${Math.sin(angle) * r}px - 22px)`;
+                el.innerHTML = `<span>${item.i}</span><p>${item.n}</p>`;
+                el.onclick = function() {
+                    if(this.classList.contains('clicked')) return;
+                    this.classList.add('clicked');
+                    if(item.t === 'good') {
+                        this.style.opacity = 0; this.style.transform = 'scale(0)';
+                        centerTarget.style.transform = 'scale(1.15)'; 
+                        setTimeout(() => centerTarget.style.transform = 'scale(1)', 300);
+                        emoSub.innerText = "✨ 收集了 " + item.n;
+                    } else {
+                        this.style.transform = 'scale(1.2)'; this.style.opacity = 0; 
+                        emoSub.innerText = "🛡️ 已帮你挡掉 " + item.n;
+                    }
                 };
-            } else {
-                el.style.transition = 'all 0.5s'; el.style.transform = 'scale(1.2)'; el.style.opacity = 0; emoSub.innerText = "🛡️ " + item.msg;
-            }
+                area.appendChild(el);
+            });
         }
 
-        // 烟花逻辑
-        function startFireworks() {
-            finalBtn.innerHTML = "🎉 情人节快乐！"; finalBtn.style.background = "#ffd700";
+        // --- Common ---
+        const startDate = new Date('2026-01-31T00:00:00');
+        setInterval(() => {
+            const diff = new Date() - startDate;
+            const d = Math.floor(diff / 86400000);
+            const h = Math.floor((diff % 86400000) / 3600000);
+            const m = Math.floor((diff % 3600000) / 60000).toString().padStart(2, '0');
+            const s = Math.floor((diff % 60000) / 1000).toString().padStart(2, '0');
+            const el = document.getElementById('love-timer');
+            if(el) el.innerText = `${d}天 ${h}时 ${m}分 ${s}秒`;
+        }, 1000);
+
+        const bgm = document.getElementById('bgm');
+        const musicBtn = document.getElementById('music-control');
+        let isPlaying = false;
+        
+        document.body.addEventListener('touchstart', function() {
+            if(!isPlaying) { bgm.play(); isPlaying = true; musicBtn.classList.add('playing'); }
+        }, {once:true});
+
+        musicBtn.onclick = () => {
+            if(isPlaying) { bgm.pause(); musicBtn.classList.remove('playing'); } 
+            else { bgm.play(); musicBtn.classList.add('playing'); }
+            isPlaying = !isPlaying;
+        };
+
+        window.startFireworks = () => {
+            finalBtn.innerText = "🎉 情人节快乐！"; 
+            finalBtn.style.background = "#FFD700";
             const container = document.getElementById('fireworks-container');
-            const colors = ['#eec1cd', '#d4a5b0', '#fff'];
-            for(let i=0; i<80; i++) {
+            const colors = ['#eec1cd', '#d4a5b0', '#FFD700', '#FF69B4'];
+            for(let i=0; i<60; i++) {
                 const p = document.createElement('div'); p.className = 'confetti';
                 p.style.background = colors[Math.floor(Math.random()*colors.length)];
-                p.style.left = '50%'; p.style.top = '50%';
+                p.style.left = '50%'; p.style.top = '70%'; 
                 const angle = Math.random() * Math.PI * 2; const dist = 100 + Math.random() * 300;
                 p.animate([
-                    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+                    { transform: 'translate(0,0) scale(1)', opacity: 1 }, 
                     { transform: `translate(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist}px) scale(0)`, opacity: 0 }
-                ], { duration: 1500 + Math.random()*1000, fill: 'forwards' });
+                ], { duration: 1000 + Math.random()*1000, fill: 'forwards' });
                 container.appendChild(p);
             }
-        }
+        };
     </script>
 </body>
 </html>
